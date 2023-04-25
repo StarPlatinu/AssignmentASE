@@ -21,8 +21,39 @@ export default function Home() {
     loadUsers();
   };
 
+    // the value of the search field 
+    const [name, setName] = useState('');
+
+  
+    const filter = (e) => {
+      const keyword = e.target.value;
+  
+      if (keyword !== '') {
+        const results = users.filter((user) => {
+          return user.name.toLowerCase().startsWith(keyword.toLowerCase());
+          // Use the toLowerCase() method to make it case-insensitive
+        });
+        setUsers(results);
+      } else {
+        loadUsers();
+        // If the text field is empty, show all users
+      }
+  
+      setName(keyword);
+    };
+
+
   return (
     <div className="container">
+
+      <input
+        type="search"
+        value={name}
+        onChange={filter}
+        className="input m-3"
+        placeholder="Filter"
+      />
+
       <div className="py-4">
         <table className="table border shadow">
           <thead>
